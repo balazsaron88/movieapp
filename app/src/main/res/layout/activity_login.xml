@@ -61,6 +61,6 @@
         android:id="@+id/buttonRegister"
         android:layout_below="@+id/buttonLogin"
         android:layout_marginTop="20dp"
-        android:text="Not Log IN | Register From here "/>
+        android:text="Register"/>
 
 </RelativeLayout>

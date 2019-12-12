@@ -1,17 +1,23 @@
 package com.example.movieapp;
 import android.content.Intent;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class DashboardActivity extends AppCompatActivity {
 
     String EmailHolder;
     TextView Email;
     Button LogOUT ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +45,25 @@ public class DashboardActivity extends AppCompatActivity {
                 Toast.makeText(DashboardActivity.this,"Log Out Successfull", Toast.LENGTH_LONG).show();
 
             }
+        });
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_profile:
+                        Toast.makeText(DashboardActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_home:
+                        Toast.makeText(DashboardActivity.this, "Home", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_favorite:
+                        Toast.makeText(DashboardActivity.this, "Favorites   ", Toast.LENGTH_SHORT).show();
+                        break;                }
+                return true;
+            }
+
         });
 
     }

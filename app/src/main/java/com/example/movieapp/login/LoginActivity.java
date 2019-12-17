@@ -1,4 +1,4 @@
-package com.example.movieapp;
+package com.example.movieapp.login;
         import android.content.Intent;
         import android.database.Cursor;
         import android.database.sqlite.SQLiteDatabase;
@@ -9,6 +9,10 @@ package com.example.movieapp;
         import android.widget.Button;
         import android.widget.EditText;
         import android.widget.Toast;
+
+        import com.example.movieapp.DashboardActivity;
+        import com.example.movieapp.R;
+        import com.example.movieapp.db.SQLiteHelper;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -74,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
             sqLiteDatabaseObj = sqLiteHelper.getWritableDatabase();
 
             // Adding search email query to cursor.
-            cursor = sqLiteDatabaseObj.query(SQLiteHelper.TABLE_NAME, null, " " + SQLiteHelper.Table_Column_2_Email + "=?", new String[]{EmailHolder}, null, null, null);
+            cursor = sqLiteDatabaseObj.query(SQLiteHelper.TABLE_NAME_USER, null, " " + SQLiteHelper.Table_Column_2_Email + "=?", new String[]{EmailHolder}, null, null, null);
 
             while (cursor.moveToNext()) {
 

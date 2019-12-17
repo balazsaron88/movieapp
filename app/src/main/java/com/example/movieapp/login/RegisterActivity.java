@@ -15,12 +15,12 @@ import com.example.movieapp.db.SQLiteHelper;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText Email, Password, Name ;
-    Button Register;
-    String NameHolder, EmailHolder, PasswordHolder;
-    Boolean EditTextEmptyHolder;
+    EditText email, password, name ;
+    Button register;
+    String nameHolder, emailHolder, passwordHolder;
+    Boolean editTextEmptyHolder;
     SQLiteDatabase sqLiteDatabaseObj;
-    String SQLiteDataBaseQueryHolder ;
+    String sqLiteDataBaseQueryHolder ;
     SQLiteHelper sqLiteHelper;
     Cursor cursor;
     String F_Result = "Not_Found";
@@ -30,16 +30,16 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        Register = (Button)findViewById(R.id.buttonRegister);
+        register = (Button)findViewById(R.id.buttonRegister);
 
-        Email = (EditText)findViewById(R.id.editEmail);
-        Password = (EditText)findViewById(R.id.editPassword);
-        Name = (EditText)findViewById(R.id.editName);
+        email = (EditText)findViewById(R.id.editEmail);
+        password = (EditText)findViewById(R.id.editPassword);
+        name = (EditText)findViewById(R.id.editName);
 
         sqLiteHelper = new SQLiteHelper(this);
 
         // Adding click listener to register button.
-        Register.setOnClickListener(new View.OnClickListener() {
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -74,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
     // SQLite table build method.
     public void SQLiteTableBuild() {
 
-        sqLiteDatabaseObj.execSQL("CREATE TABLE IF NOT EXISTS " + SQLiteHelper.TABLE_NAME_USER + "(" + SQLiteHelper.Table_Column_ID + " PRIMARY KEY AUTOINCREMENT NOT NULL, " + SQLiteHelper.Table_Column_1_Name + " VARCHAR, " + SQLiteHelper.Table_Column_2_Email + " VARCHAR, " + SQLiteHelper.Table_Column_3_Password + " VARCHAR);");
+        sqLiteDatabaseObj.execSQL("CREATE TABLE IF NOT EXISTS " + SQLiteHelper.TABLE_NAME_USER + "(" + SQLiteHelper.COLUMN_USER_ID + " PRIMARY KEY AUTOINCREMENT NOT NULL, " + SQLiteHelper.COLUMN_USER_NAME + " VARCHAR, " + SQLiteHelper.COLUMN_USER_EMAIL + " VARCHAR, " + SQLiteHelper.COLUMN_USER_PASSWORD + " VARCHAR);");
 
     }
 
@@ -82,14 +82,14 @@ public class RegisterActivity extends AppCompatActivity {
     public void InsertDataIntoSQLiteDatabase(){
 
         // If editText is not empty then this block will executed.
-        if(EditTextEmptyHolder == true)
+        if(editTextEmptyHolder == true)
         {
 
             // SQLite query to insert data into table.
-            SQLiteDataBaseQueryHolder = "INSERT INTO "+SQLiteHelper.TABLE_NAME_USER +" (name,email,password) VALUES('"+NameHolder+"', '"+EmailHolder+"', '"+PasswordHolder+"');";
+            sqLiteDataBaseQueryHolder = "INSERT INTO "+SQLiteHelper.TABLE_NAME_USER +" (name,email,password) VALUES('"+nameHolder+"', '"+emailHolder+"', '"+passwordHolder+"');";
 
             // Executing query.
-            sqLiteDatabaseObj.execSQL(SQLiteDataBaseQueryHolder);
+            sqLiteDatabaseObj.execSQL(sqLiteDataBaseQueryHolder);
 
             // Closing SQLite database object.
             sqLiteDatabaseObj.close();
@@ -111,11 +111,11 @@ public class RegisterActivity extends AppCompatActivity {
     // Empty edittext after done inserting process method.
     public void EmptyEditTextAfterDataInsert(){
 
-        Name.getText().clear();
+        name.getText().clear();
 
-        Email.getText().clear();
+        email.getText().clear();
 
-        Password.getText().clear();
+        password.getText().clear();
 
     }
 
@@ -123,18 +123,18 @@ public class RegisterActivity extends AppCompatActivity {
     public void CheckEditTextStatus(){
 
         // Getting value from All EditText and storing into String Variables.
-        NameHolder = Name.getText().toString() ;
-        EmailHolder = Email.getText().toString();
-        PasswordHolder = Password.getText().toString();
+        nameHolder = name.getText().toString() ;
+        emailHolder = email.getText().toString();
+        passwordHolder = password.getText().toString();
 
-        if(TextUtils.isEmpty(NameHolder) || TextUtils.isEmpty(EmailHolder) || TextUtils.isEmpty(PasswordHolder)){
+        if(TextUtils.isEmpty(nameHolder) || TextUtils.isEmpty(emailHolder) || TextUtils.isEmpty(passwordHolder)){
 
-            EditTextEmptyHolder = false ;
+            editTextEmptyHolder = false ;
 
         }
         else {
 
-            EditTextEmptyHolder = true ;
+            editTextEmptyHolder = true ;
         }
     }
 
@@ -145,7 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
         sqLiteDatabaseObj = sqLiteHelper.getWritableDatabase();
 
         // Adding search email query to cursor.
-        cursor = sqLiteDatabaseObj.query(SQLiteHelper.TABLE_NAME_USER, null, " " + SQLiteHelper.Table_Column_2_Email + "=?", new String[]{EmailHolder}, null, null, null);
+        cursor = sqLiteDatabaseObj.query(SQLiteHelper.TABLE_NAME_USER, null, " " + SQLiteHelper.COLUMN_USER_EMAIL + "=?", new String[]{emailHolder}, null, null, null);
 
         while (cursor.moveToNext()) {
 
